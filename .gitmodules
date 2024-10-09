@@ -1,0 +1,3 @@
+[submodule "RLclass_MVA"]
+	path = RLclass_MVA
+	url = https://github.com/erachelson/RLclass_MVA.git

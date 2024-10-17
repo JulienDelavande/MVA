@@ -1,3 +1,7 @@
 [submodule "RLclass_MVA"]
 	path = Reinforcement_learning/RLclass_MVA
 	url = https://github.com/erachelson/RLclass_MVA.git
+
+[submodule "TimeSeries"]
+	path = Time_series/tutorials-mva-2024-2025
+	url = https://github.com/deepcharles/tutorials-mva-2024-2025.git

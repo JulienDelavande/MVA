@@ -4,3 +4,15 @@ venv/
 
 # Altegrad
 Altegrad/tutorials/Lab1_HAN/data/*
+
+#latex
+main.aux
+main.log
+main.out
+main.fdb_latexmk
+main.fls
+main.synctex.gz
+main.xsim
+shortcuts.sty
+theme.sty
+texput.log

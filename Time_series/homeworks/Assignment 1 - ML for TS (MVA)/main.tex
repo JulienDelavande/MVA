@@ -5,8 +5,8 @@
 % Document title
 \title{Assignment 1 (ML for TS) - MVA}
 \author{
-Julien Delavande \email{Julien.Delavande@ens-paris-saclay.fr} \\ % student 1
-Firstname Lastname \email{youremail2@mail.com} % student 2
+Soël Megdoud \email{Soel.Megdoud@ens-paris-saclay.fr} \\ % student 1
+Julien Delavande \email{Julien.Delavande@ens-paris-saclay.fr} % student 2
 }
 
 \begin{document}
@@ -47,15 +47,50 @@ where $y\in\RR^n$ is the response vector, $X\in\RR^{n\times p}$ the design matri
 Show that there exists $\lambda_{\max}$ such that the minimizer of~\eqref{eq:lasso} is $\mathbf{0}_p$ (a $p$-dimensional vector of zeros) for any $\lambda > \lambda_{\max}$. 
 \end{exercise}
 
-\begin{solution}  % ANSWER HERE
+\begin{solution}  % QUESTION 1
 
-The subgradient condition at \(\beta = \mathbf{0}_p\) is:
-\[
-X^\top y = \lambda s, \quad \text{with} \quad \| s \|_\infty \leq 1.
-\]
-Defining \(\lambda_{\max} = \| X^\top y \|_\infty\), for \(\lambda > \lambda_{\max}\), we get \(| s_i | < 1\), satisfying the optimality condition at \(\beta = \mathbf{0}_p\). Thus, \(\beta = \mathbf{0}_p\) is the minimizer when \(\lambda > \lambda_{\max}\).
-
-\end{solution}
+    \begin{equation}
+        \lambda{\max} = | X^T y |{\infty}
+    \end{equation}
+    
+    Let’s consider the KKT conditions for the Lasso problem, which state that the gradient of the objective function with respect to $ \beta $ must be zero. This leads to the following system of equations:
+    
+    \[
+    \frac{\partial f}{\partial \beta} = 0 \quad \text{which is equivalent to} \quad -X^T (y - X\beta) + \lambda , \text{sgn}(\beta) = \lambda , \text{sgn}(\beta) - X^T y + X^T X \beta = 0
+    \]
+    
+    
+    We will now assume $ \lambda > \lambda{\max} $, where:
+    
+    \[
+    \lambda{\max} = | X^T y |{\infty}
+    \]
+    
+    We will show by contradiction that $\beta = 0$ is the unique solution to the Lasso problem when $ \lambda > \lambda{\max} $. Suppose there exists an optimal solution $\beta \neq 0$.
+    
+    Since $\beta \neq 0$, there exists some index $i$ such that $ \beta_i \neq 0$. Without loss of generality, let’s assume $\beta_i > 0$ the case for $ \beta_i < 0$ is similar.
+    
+    We have:
+    
+    \[
+    \lambda , \text{sgn}(\beta_i) - {X^T y}_i + {X^T X \beta}_i = \lambda - {X^T y}_i + (X^T X \beta)i
+    \]
+    
+    Now, since we assumed $ \lambda > | X^T y |{\infty} $, we have $ \lambda > {X^T y}_i $. Therefore:
+    
+    \[
+    \lambda - {X^T y}_i > 0
+    \]
+    
+    Thus, the equation becomes:
+    
+    \[
+    \lambda - {X^T y}_i + {X^T X \beta}_i > {X^T X \beta}_i > 0
+    \]
+    
+    This implies that the KKT conditions are not satisfied for this non-zero \( \beta \) and that \( \beta = 0 \) is the unique solution for these \(\lambda\).
+    
+\end{solution}  % END QUESTION 1
 
 \begin{exercise}
 For a univariate signal $\mathbf{x}\in\mathbb{R}^n$ with $n$ samples, the convolutional dictionary learning task amounts to solving the following optimization problem:
@@ -73,7 +108,7 @@ Show that
 \end{itemize}
 \end{exercise}
 
-\begin{solution}  % ANSWER HERE
+\begin{solution}  % Question 2
 
 Given the convolutional dictionary learning problem:
 
@@ -89,7 +124,7 @@ For a fixed dictionary, each convolution \(\mathbf{z}_k * \mathbf{d}_k\) is writ
 
 with \(D = [D_1, \dots, D_K]\), which is a Lasso regression. The threshold \(\lambda_{\max} = \|D^\top \mathbf{x}\|_\infty\) ensures that for \(\lambda > \lambda_{\max}\), the solution is \(\mathbf{z} = 0\).
 
-\end{solution}
+\end{solution} % END QUESTION 2
 
 \section{Spectral feature}
 
@@ -118,7 +153,7 @@ In this question, let $X_n$ ($n=0,\dots,N-1)$ be a Gaussian white noise.
 
 \end{exercise}
 
-\begin{solution}
+\begin{solution} % QUESTION 3
 
 For a Gaussian white noise process \(X_n\), we have:
 
@@ -147,7 +182,7 @@ S(f) = \sigma^2 \sum_{\tau=-\infty}^{+\infty} \delta(\tau) e^{-2\pi f \tau / f_s
 
 Thus, the power spectrum of white noise is constant across all frequencies, which is why it is called "white," analogous to white light containing all frequencies in equal measure.
 
-\end{solution}
+\end{solution} % END QUESTION 3
 
 
 \begin{exercise}
@@ -163,7 +198,7 @@ for $\tau=0,1,\dots,N-1$ and $\hat{\gamma}(\tau):=\hat{\gamma}(-\tau)$ for $\tau
 
 \end{exercise}
 
-\begin{solution}
+\begin{solution} % QUESTION 4
 
 The sample autocovariance is defined as:
 
@@ -197,7 +232,7 @@ A simple way to de-bias this estimator is to scale \(\hat{\gamma}(\tau)\) by \(\
 \hat{\gamma}_{\text{debias}}(\tau) = \frac{N}{N-\tau} \hat{\gamma}(\tau).
 \]
 
-\end{solution}
+\end{solution} % END QUESTION 4
 
 \begin{exercise}
 Define the discrete Fourier transform of the random process $\{X_n\}_n$ by
@@ -213,7 +248,7 @@ The \textit{periodogram} is the collection of values $|J(f_0)|^2$, $|J(f_1)|^2$,
 \end{itemize}
 \end{exercise}
 
-\begin{solution}
+\begin{solution} % QUESTION 5
 
 \begin{itemize}
     
@@ -250,7 +285,7 @@ which proves the asymptotic unbiasedness of the periodogram as an estimator of t
 \end{itemize}
 
     
-\end{solution}
+\end{solution} % END QUESTION 5
 
 \begin{exercise}\label{ex:wn-exp}
     In this question, let $X_n$ ($n=0,\dots,N-1)$ be a Gaussian white noise with variance $\sigma^2=1$ and set the sampling frequency to $f_s=1$ Hz
@@ -298,7 +333,7 @@ which proves the asymptotic unbiasedness of the periodogram as an estimator of t
 
 \end{exercise}
 
-\begin{solution}
+\begin{solution} % QUESTION 6
 
     For both the sample autocovariances and periodograms, here are the key observations from the plots:
     
@@ -318,7 +353,7 @@ which proves the asymptotic unbiasedness of the periodogram as an estimator of t
 
     In summary, both the sample autocovariance and periodogram plots become more reliable and less variable as $N$ increases, which confirms the consistency of these estimators for large $N$.
     
-    \end{solution}
+\end{solution} % END QUESTION 6
     
 
 \begin{exercise}
@@ -334,43 +369,66 @@ which proves the asymptotic unbiasedness of the periodogram as an estimator of t
     \end{itemize}
 \end{exercise}
 
-\begin{solution}
-
-    \paragraph{Step 1: Variance of \(\hat{\gamma}(\tau)\)}
-    
-    We begin by calculating the variance of the sample autocovariance estimator \(\hat{\gamma}(\tau)\) for \(\tau > 0\). The sample autocovariance is given by:
-    
+\begin{solution} % QUESTION 7
+    \begin{itemize}
+        \item \begin{proof}
+    Let $X = \{X_n\}$ be a wide-sense stationary Gaussian process with zero mean, i.e., $\mathbb{E}[X_n] = 0$ for all $n$. The empirical estimator of the autocovariance at lag $\tau > 0$ is:
     \[
     \hat{\gamma}(\tau) = \frac{1}{N} \sum_{n=0}^{N-\tau-1} X_n X_{n+\tau}.
     \]
     
-    Since \(\{X_n\}_n\) is a wide-sense stationary Gaussian process, we can express the variance of \(\hat{\gamma}(\tau)\) by applying the result for joint expectations of centered Gaussian variables (as given in the hint). For four centered jointly Gaussian random variables \(\{Y_1, Y_2, Y_3, Y_4\}\), we have:
-    
+    First, note that:
     \[
-    \mathbb{E}[Y_1 Y_2 Y_3 Y_4] = \mathbb{E}[Y_1 Y_2] \mathbb{E}[Y_3 Y_4] + \mathbb{E}[Y_1 Y_3] \mathbb{E}[Y_2 Y_4] + \mathbb{E}[Y_1 Y_4] \mathbb{E}[Y_2 Y_3].
+    \mathbb{E}[\hat{\gamma}(\tau)] = \gamma(\tau),
+    \]
+    since $\mathbb{E}[X_n X_{n+\tau}] = \gamma(\tau)$ due to stationarity.
+    
+    To compute the variance $\text{var}(\hat{\gamma}(\tau))$, we have:
+    \[
+    \text{var}(\hat{\gamma}(\tau)) = \mathbb{E}[\hat{\gamma}^2(\tau)] - \gamma^2(\tau),
+    \]
+    where
+    \[
+    \mathbb{E}[\hat{\gamma}^2(\tau)] = \frac{1}{N^2} \sum_{n=0}^{N-\tau-1} \sum_{m=0}^{N-\tau-1} \mathbb{E}[X_n X_{n+\tau} X_m X_{m+\tau}].
     \]
     
-    Applying this to the computation of the variance of \(\hat{\gamma}(\tau)\), we obtain:
+    Using the hint for jointly Gaussian zero-mean variables, we get:
     
     \[
-    \text{var}(\hat{\gamma}(\tau)) = \frac{1}{N} \sum_{n=-(N-\tau-1)}^{n=N-\tau-1} \left(1 - \frac{\tau + |n|}{N}\right) \left[\gamma^2(n) + \gamma(n-\tau)\gamma(n+\tau)\right].
+    \mathbb{E}[X_n X_{n+\tau} X_m X_{m+\tau}] = \gamma^2(\tau) + \gamma^2(n - m) + \gamma(n - m - \tau) \gamma(n - m + \tau).
     \]
     
-    This formula expresses the variance of the estimator as a function of the true autocovariance function \(\gamma(\tau)\) and the sample size \(N\).
-    
-    \paragraph{Step 2: Consistency of \(\hat{\gamma}(\tau)\)}
-    
-    To show that \(\hat{\gamma}(\tau)\) is consistent, we need to demonstrate that the variance of \(\hat{\gamma}(\tau)\) tends to zero as \(N \to \infty\). From the formula for \(\text{var}(\hat{\gamma}(\tau))\), we can see that as \(N\) increases, the factor \(1/N\) dominates, which causes the overall variance to decrease. More formally, as \(N \to \infty\), the variance of \(\hat{\gamma}(\tau)\) approaches zero.
-    
-    Since \(\hat{\gamma}(\tau)\) is an unbiased estimator (as shown in a previous exercise) and its variance tends to zero as \(N \to \infty\), we conclude that:
-    
+    Thus,
     \[
-    \hat{\gamma}(\tau) \xrightarrow{p} \gamma(\tau) \quad \text{as} \quad N \to \infty.
+    \mathbb{E}[\hat{\gamma}^2(\tau)] = \frac{1}{N^2} \sum_{n=0}^{N-\tau-1} \sum_{m=0}^{N-\tau-1} \left[ \gamma^2(\tau) + \gamma^2(n - m) + \gamma(n - m - \tau)\gamma(n - m + \tau) \right].
     \]
     
-    This proves that \(\hat{\gamma}(\tau)\) is a consistent estimator of \(\gamma(\tau)\).
+    Let $k = n - m$. The number of pairs $(n, m)$ such that $n - m = k$ is $(N - \tau - |k|)$ for $|k| \leq N - \tau - 1$. Therefore,
+    \[
+    \mathbb{E}[\hat{\gamma}^2(\tau)] = \frac{1}{N^2} \sum_{k=-(N-\tau-1)}^{N-\tau-1} (N - \tau - |k|) \left[ \gamma^2(\tau) + \gamma^2(k) + \gamma(k - \tau)\gamma(k + \tau) \right].
+    \]
     
-    \end{solution}
+    Subtracting $\gamma^2(\tau)$, we obtain:
+    \[
+    \text{var}(\hat{\gamma}(\tau)) = \frac{1}{N^2} \sum_{k=-(N-\tau-1)}^{N-\tau-1} (N - \tau - |k|) \left[ \gamma^2(k) + \gamma(k - \tau)\gamma(k + \tau) \right].
+    \]
+    
+    Rewriting, we get:
+    \[
+    \text{var}(\hat{\gamma}(\tau)) = \frac{1}{N} \sum_{k=-(N-\tau-1)}^{N-\tau-1} \left(1 - \frac{\tau + |k|}{N}\right) \left[ \gamma^2(k) + \gamma(k - \tau)\gamma(k + \tau) \right].
+    \]
+    
+    \end{proof}
+    
+        \item Since $\gamma(k)$ is bounded and the term $\frac{\tau + |k|}{N} \to 0$ as $N \to \infty$, we have:
+    \[
+    \lim_{N \to \infty} \text{var}(\hat{\gamma}(\tau)) = 0.
+    \]
+    
+    Therefore, $\hat{\gamma}(\tau)$ converges in probability to $\gamma(\tau)$, and thus it is a consistent estimator.
+    \end{itemize}
+        
+\end{solution}  % END QUESTION 7
     
 Contrary to the correlogram, the periodogram is not consistent.
 It is one of the most well-known estimators that is asymptotically unbiased but not consistent.
@@ -388,57 +446,94 @@ In the following question, this is proven for Gaussian white noise, but this hol
 \end{exercise}
 
 \begin{solution}
-
-    \paragraph{Mean and variance of \(A(f)\) and \(B(f)\):}
+    \begin{proof}
+    \textbf{(a) Mean and Variance of \(A(f_k)\) and \(B(f_k)\):}
     
-    Let us first derive the mean and variance of \(A(f)\) and \(B(f)\) for \(f = f_0, f_1, \dots, f_{N/2}\), where \(f_k = f_s k / N\). By the definition of Gaussian white noise, the random variables \(X_n\) are independent and identically distributed (i.i.d.) with mean 0 and variance \(\sigma^2\).
-    
-    The expressions for \(A(f)\) and \(B(f)\) are:
+    Given \(X_n\) are independent Gaussian random variables with mean zero and variance \(\sigma^2\), we have:
     \[
-    A(f) = \sum_{n=0}^{N-1} X_n \cos\left( \frac{-2\pi f n}{f_s} \right), \quad B(f) = \sum_{n=0}^{N-1} X_n \sin\left( \frac{-2\pi f n}{f_s} \right).
+    A(f_k) = \sum_{n=0}^{N-1} X_n \cos\left(-2\pi f_k n / f_s\right),
+    \]
+    \[
+    B(f_k) = \sum_{n=0}^{N-1} X_n \sin\left(-2\pi f_k n / f_s\right),
+    \]
+    where \(f_k = \frac{f_s k}{N}\), for \(k = 0, 1, \dots, N/2\).
+    
+    \emph{Mean}:
+    \[
+    \mathbb{E}[A(f_k)] = \sum_{n=0}^{N-1} \mathbb{E}[X_n] \cos\left(-2\pi f_k n / f_s\right) = 0,
+    \]
+    \[
+    \mathbb{E}[B(f_k)] = \sum_{n=0}^{N-1} \mathbb{E}[X_n] \sin\left(-2\pi f_k n / f_s\right) = 0.
     \]
     
-    Since \(X_n\) has zero mean, it follows that:
+    \emph{Variance}:
+    \begin{align*}
+    \text{Var}[A(f_k)] &= \mathbb{E}[A(f_k)^2] = \sum_{n=0}^{N-1} \mathbb{E}[X_n^2] \cos^2\left(2\pi k n / N\right) \\
+    &= \sigma^2 \sum_{n=0}^{N-1} \cos^2\left(2\pi k n / N\right) = \frac{\sigma^2 N}{2},
+    \end{align*}
+    since \(\sum_{n=0}^{N-1} \cos^2\left(2\pi k n / N\right) = N/2\).
+    
+    Similarly,
     \[
-    \mathbb{E}[A(f)] = \mathbb{E}[B(f)] = 0.
+    \text{Var}[B(f_k)] = \frac{\sigma^2 N}{2}.
     \]
     
-    To compute the variance, we use the fact that the \(X_n\)'s are independent:
-    \[
-    \text{Var}(A(f)) = \sum_{n=0}^{N-1} \text{Var}(X_n \cos(2\pi f n / f_s)) = \sigma^2 \sum_{n=0}^{N-1} \cos^2\left( \frac{2\pi f n}{f_s} \right).
-    \]
-    Since \(\cos^2(\cdot)\) and \(\sin^2(\cdot)\) both integrate to 1 over a period, the variance simplifies to:
-    \[
-    \text{Var}(A(f)) = \text{Var}(B(f)) = \frac{N \sigma^2}{2}.
-    \]
+    \textbf{(b) Distribution of \(|J(f_k)|^2\):}
     
-    \paragraph{Distribution of the periodogram values \( |J(f_k)|^2 \):}
+    Since \(A(f_k)\) and \(B(f_k)\) are linear combinations of independent Gaussian variables, they are jointly Gaussian. The covariance between \(A(f_k)\) and \(B(f_k)\) is:
+    \begin{align*}
+    \text{Cov}[A(f_k), B(f_k)] &= \mathbb{E}[A(f_k) B(f_k)] \\
+    &= \sum_{n=0}^{N-1} \mathbb{E}[X_n^2] \cos\left(2\pi k n / N\right) \sin\left(2\pi k n / N\right) \\
+    &= \sigma^2 \sum_{n=0}^{N-1} \frac{\sin\left(4\pi k n / N\right)}{2} = 0,
+    \end{align*}
+    since the sum of \(\sin\left(4\pi k n / N\right)\) over one or multiple periods is zero.
     
-    The periodogram values are given by:
-    \[
-    |J(f_k)|^2 = \frac{1}{N^2} \left( A(f_k)^2 + B(f_k)^2 \right).
-    \]
-    Since \(A(f_k)\) and \(B(f_k)\) are independent Gaussian random variables with zero mean and variance \(N \sigma^2 / 2\), their squares follow a chi-squared distribution with 1 degree of freedom. Hence, the sum \(A(f_k)^2 + B(f_k)^2\) follows a chi-squared distribution with 2 degrees of freedom.
+    Thus, \(A(f_k)\) and \(B(f_k)\) are independent Gaussian random variables with mean zero and variance \(\sigma^2 N/2\).
     
-    Therefore, \( |J(f_k)|^2 \) follows an exponential distribution with mean \( \sigma^2 / N \):
+    The periodogram at frequency \(f_k\) is:
     \[
-    |J(f_k)|^2 \sim \frac{\sigma^2}{N} \text{Exp}(1).
+    |J(f_k)|^2 = \left|\frac{A(f_k) + i B(f_k)}{N}\right|^2 = \frac{A(f_k)^2 + B(f_k)^2}{N^2}.
     \]
     
-    \paragraph{Variance of \( |J(f_k)|^2 \):}
-    
-    The variance of an exponential distribution with mean \(\mu\) is equal to \(\mu^2\). Therefore, the variance of \( |J(f_k)|^2 \) is:
+    Define \(Z = \frac{\sqrt{2}}{\sigma \sqrt{N}} (A(f_k) + i B(f_k))\), then \(Z\) is a complex Gaussian random variable with independent standard normal real and imaginary parts. Therefore,
     \[
-    \text{Var}(|J(f_k)|^2) = \left( \frac{\sigma^2}{N} \right)^2.
+    |Z|^2 = \left(\frac{\sqrt{2}}{\sigma \sqrt{N}}\right)^2 (A(f_k)^2 + B(f_k)^2) = \frac{2}{\sigma^2 N} (A(f_k)^2 + B(f_k)^2) \sim \chi^2_2,
     \]
-    Since the variance does not decrease as \(N\) increases, we conclude that the periodogram is not consistent, as its variance does not tend to 0 as \(N \to \infty\). This contrasts with estimators that are consistent, where the variance would tend to zero as more data are collected.
+    where \(\chi^2_2\) denotes the chi-squared distribution with 2 degrees of freedom.
     
-    \paragraph{Explanation of the erratic behavior of the periodogram:}
+    Thus,
+    \[
+    |J(f_k)|^2 = \frac{\sigma^2}{N} \cdot \frac{|Z|^2}{2} \sim \frac{\sigma^2}{N} \cdot \text{Exp}(1),
+    \]
+    since \(\chi^2_2/2\) follows an exponential distribution with mean 1.
     
-    The erratic behavior of the periodogram observed in Question~\ref{ex:wn-exp} is due to the high variance of the periodogram values, even for large \(N\). Additionally, there is some covariance between the periodogram values at neighboring frequencies, caused by the fact that the periodogram does not completely decorrelate between adjacent frequency bins.
+    \textbf{(c) Variance of \(|J(f_k)|^2\) and Non-Consistency:}
     
-    This covariance leads to fluctuations in the periodogram that are not purely random noise but are also influenced by the data points in adjacent frequencies. This explains why the periodogram appears noisy and unstable, especially for small values of \(N\).
+    The mean and variance of \(|J(f_k)|^2\) are:
+    \[
+    \mathbb{E}[|J(f_k)|^2] = \frac{\sigma^2}{N},
+    \]
+    \[
+    \text{Var}[|J(f_k)|^2] = \left(\frac{\sigma^2}{N}\right)^2 \text{Var}\left[\frac{\chi^2_2}{2}\right] = \left(\frac{\sigma^2}{N}\right)^2.
+    \]
     
+    The variance does not tend to zero relative to the mean as \(N \to \infty\):
+    \[
+    \frac{\text{Var}[|J(f_k)|^2]}{\left(\mathbb{E}[|J(f_k)|^2]\right)^2} = 1.
+    \]
+    
+    Since the variance of \(|J(f_k)|^2\) does not vanish as \(N\) increases, the periodogram \(|J(f_k)|^2\) is not consistent.
+    
+    \textbf{(d) Covariance Between \(|J(f_k)|^2\) and \(|J(f_l)|^2\):}
+    
+    The covariance between \(|J(f_k)|^2\) and \(|J(f_l)|^2\) for \(k \ne l\) is non-zero due to the overlapping sums in \(A(f_k)\) and \(A(f_l)\), and similarly for \(B(f_k)\) and \(B(f_l)\). This leads to:
+    \[
+    \text{Cov}[|J(f_k)|^2, |J(f_l)|^2] = \frac{\sigma^4}{N^2} \left| \sum_{n=0}^{N-1} e^{-2\pi i (f_k - f_l) n / f_s} \right|^2.
+    \]
+    
+    This covariance does not vanish as \(N \to \infty\), causing the periodogram values at different frequencies to be correlated. This correlation leads to the erratic behavior observed in the periodogram, as fluctuations at one frequency affect those at others, preventing the periodogram from converging smoothly as \(N\) increases.
+    \end{proof}
+        
     \end{solution}
     
 
@@ -511,12 +606,8 @@ Data are described in the associated notebook.
 Combine the DTW and a k-neighbors classifier to classify each step. Find the optimal number of neighbors with 5-fold cross-validation and report the optimal number of neighbors and the associated F-score. Comment briefly.
 \end{exercise}
 
-\begin{solution}
-    We combined the Dynamic Time Warping (DTW) distance with a k-nearest neighbors (k-NN) classifier to classify each step as healthy or non-healthy. To determine the optimal number of neighbors, we performed 5-fold cross-validation on the training set using different values of \( k \) (specifically, \( k = 1, 2, 3, 4, 5, 7, 9 \)).
-    
-    For each value of \( k \), we trained the k-NN classifier using DTW as the distance metric and computed the weighted F1-score on the validation folds. The F1-score is an appropriate performance metric for this binary classification task as it balances precision and recall, accounting for potential class imbalance.
-    
-    After evaluating the different values of \( k \), we found that the optimal number of neighbors was \( k = 3 \), which yielded the highest average F1-score of approximately \( 0.88 \) on the validation sets.
+\begin{solution} % QUESTION 10   
+    After evaluating the different values of \( k \) (specifically, \( k = 1, 2, 3, 4, 5, 7, 9 \)), we found that the optimal number of neighbors was \( k = 3 \), which yielded the highest average F1-score of approximately \( 0.88 \) on the validation sets.
     
     Using this optimal number of neighbors, we retrained the k-NN classifier on the entire training set and evaluated its performance on the test set. The F1-score on the test set was approximately \( 0.45 \).
     

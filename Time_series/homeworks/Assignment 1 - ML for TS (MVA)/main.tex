@@ -5,8 +5,8 @@
 % Document title
 \title{Assignment 1 (ML for TS) - MVA}
 \author{
-Soël Megdoud \email{Soel.Megdoud@ens-paris-saclay.fr} \\ % student 1
-Julien Delavande \email{Julien.Delavande@ens-paris-saclay.fr} % student 2
+Soël Megdoud \email{Soel.Megdoud@gmail.com} \\ % student 1
+Julien Delavande \email{delavandejulien@gmail.com} % student 2
 }
 
 \begin{document}
@@ -424,6 +424,12 @@ which proves the asymptotic unbiasedness of the periodogram as an estimator of t
     \[
     \lim_{N \to \infty} \text{var}(\hat{\gamma}(\tau)) = 0.
     \]
+
+    By the Chebyshev inequality, we have:
+    \[
+    \forall \epsilon > 0 \quad P(|\hat{\gamma}(\tau) - \gamma(\tau)| \geq \epsilon) \leq \frac{\text{Var}(\hat{\gamma}(\tau))}{\epsilon^2}
+    \]
+
     
     Therefore, $\hat{\gamma}(\tau)$ converges in probability to $\gamma(\tau)$, and thus it is a consistent estimator.
     \end{itemize}
@@ -611,8 +617,7 @@ Combine the DTW and a k-neighbors classifier to classify each step. Find the opt
     
     Using this optimal number of neighbors, we retrained the k-NN classifier on the entire training set and evaluated its performance on the test set. The F1-score on the test set was approximately \( 0.45 \).
     
-    \textbf{Comment:} The results indicate that the k-NN classifier with DTW distance is effective in distinguishing between healthy and non-healthy steps. Choosing \( k = 3 \) provides a good balance between sensitivity to local patterns (smaller \( k \)) and robustness to noise (larger \( k \)). The high F1-scores on both the validation and test sets suggest that the model generalizes well and has good predictive performance on unseen data.
-    
+    \textbf{Comment:} The drop in F1-score (0.88 on validation vs. 0.45 on test) likely arises from multiple factors: potential overfitting to training patterns, the high prevalence of class 1 in the test set (82.95\%), and the complexity of DTW in handling diverse patterns. Adjusting class weights or incorporating more representative patterns could improve test performance.    
 \end{solution}
 
 \newpage

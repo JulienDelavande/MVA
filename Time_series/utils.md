@@ -3,3 +3,4 @@
 ## Mails:
 
 - delavandejulien@gmail.com
+- Soel.Megdoud@gmail.fr

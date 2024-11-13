@@ -1,3 +1,7 @@
+[submodule "Object_recognition/assignments/a3/recvis24_a3"]
+	path = Object_recognition/assignments/a3/recvis24_a3
+	url = git@github.com:JulienDelavande/recvis24_a3.git
+
 [submodule "RLclass_MVA"]
 	path = Reinforcement_learning/RLclass_MVA
 	url = https://github.com/erachelson/RLclass_MVA.git

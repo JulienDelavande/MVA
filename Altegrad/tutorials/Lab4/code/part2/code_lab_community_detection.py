@@ -95,10 +95,41 @@ for cluster_id, size in cluster_counts.items():
 ############## Task 5
 # Compute modularity value from graph G based on clustering
 def modularity(G, clustering):
+    """
+    Compute the modularity of a graph clustering.
+
+    Parameters:
+        G (networkx.Graph): The input graph.
+        clustering (dict): A dictionary mapping each node to its cluster ID.
+        
+    Returns:
+        float: The modularity score.
+    """
+    # Step 1: Initialize variables
+    m = G.number_of_edges()  # Total number of edges in the graph
+    modularity = 0.0  # Initialize modularity score
     
-    ##################
-    # your code here #
-    ##################
+    # Step 2: Group nodes by clusters
+    clusters = {}
+    for node, cluster_id in clustering.items():
+        if cluster_id not in clusters:
+            clusters[cluster_id] = []
+        clusters[cluster_id].append(node)
+    
+    # Step 3: Compute modularity for each cluster
+    for cluster_id, nodes in clusters.items():
+        # Compute l_c: Number of edges within the cluster
+        subgraph = G.subgraph(nodes)
+        l_c = subgraph.number_of_edges()
+        
+        # Compute d_c: Sum of degrees of all nodes in the cluster
+        d_c = sum(dict(G.degree(nodes)).values())
+        
+        # Add cluster's modularity contribution
+        modularity += (l_c / m) - (d_c / (2 * m))**2
+    
+    return modularity
+
     
     
     
@@ -110,7 +141,37 @@ def modularity(G, clustering):
 ############## Task 6
 
 ##################
-# your code here #
+import random
+import networkx as nx
+
+# Load the graph (adjust file path as needed)
+file_path = "CA-HepTh.txt"
+G = nx.read_edgelist(
+    file_path, 
+    delimiter='\t', 
+    comments='#', 
+    create_using=nx.Graph()
+)
+
+# Extract the giant connected component
+largest_cc = max(nx.connected_components(G), key=len)
+G_largest_cc = G.subgraph(largest_cc).copy()
+
+# Step 1: Spectral Clustering
+k = 50
+spectral_clusters = spectral_clustering(G_largest_cc, k)
+
+# Compute modularity for Spectral Clustering
+spectral_modularity = modularity(G_largest_cc, spectral_clusters)
+print(f"Modularity for Spectral Clustering: {spectral_modularity}")
+
+# Step 2: Random Partitioning
+random_clusters = {node: random.randint(0, k-1) for node in G_largest_cc.nodes()}
+
+# Compute modularity for Random Partitioning
+random_modularity = modularity(G_largest_cc, random_clusters)
+print(f"Modularity for Random Partitioning: {random_modularity}")
+
 ##################
 
 

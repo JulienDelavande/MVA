@@ -15,13 +15,17 @@ from torch_geometric.utils import to_networkx
 
 #load Mutag dataset
 def load_dataset():
+    # Load the MUTAG dataset from PyTorch Geometric
+    dataset = TUDataset(root="data", name="MUTAG")
 
-    ##################
-    # your code here #
-    ##################
-
+    # Convert each graph in the dataset to a NetworkX graph
+    Gs = [to_networkx(data, to_undirected=True) for data in dataset]
+    
+    # Extract the target labels
     y = [data.y.item() for data in dataset]
+    
     return Gs, y
+
 
 
 Gs,y = load_dataset()

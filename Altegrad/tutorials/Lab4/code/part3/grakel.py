@@ -62,8 +62,8 @@ def get_vocab(train_docs, test_docs):
     return vocab
 
 
-path_to_train_set = '../datasets/train_5500_coarse.label'
-path_to_test_set = '../datasets/TREC_10_coarse.label'
+path_to_train_set = './datasets/train_5500_coarse.label'
+path_to_test_set = './datasets/TREC_10_coarse.label'
 
 # Read and pre-process train data
 train_data, y_train = load_file(path_to_train_set)

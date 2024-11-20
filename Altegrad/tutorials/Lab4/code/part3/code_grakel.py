@@ -120,12 +120,11 @@ from sklearn.metrics import accuracy_score
 
 # Task 12
 
-# Task 12: Convert graphs to GraKeL format
 G_train = list(graph_from_networkx(G_train_nx, node_labels_tag=None))
 G_test = list(graph_from_networkx(G_test_nx, node_labels_tag=None))
 
 # Initialize the Weisfeiler-Lehman subtree kernel
-gk = WeisfeilerLehman(n_iter=3, base_graph_kernel=VertexHistogram())
+gk = WeisfeilerLehman(n_iter=3, base_graph_kernel=VertexHistogram)
 
 # Construct kernel matrices
 K_train = gk.fit_transform(G_train)

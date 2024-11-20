@@ -88,6 +88,8 @@ def shortest_path_kernel(Gs_train, Gs_test):
 
     return K_train, K_test
 
+K_train, K_test = shortest_path_kernel(G_train, G_test)
+
 
 
 ############## Task 8
@@ -172,13 +174,15 @@ print(f"K_test_gl shape: {K_test_gl.shape}")
 
 ############## Task 10
 
+
+
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 
 # Train SVM with the shortest path kernel
 clf_sp = SVC(kernel="precomputed")
-clf_sp.fit(K_train_gl, y_train)
-y_pred_sp = clf_sp.predict(K_test_gl)
+clf_sp.fit(K_train, y_train)
+y_pred_sp = clf_sp.predict(K_test)
 
 # Evaluate the shortest path kernel
 accuracy_sp = accuracy_score(y_test, y_pred_sp)

@@ -145,7 +145,7 @@ import random
 import networkx as nx
 
 # Load the graph (adjust file path as needed)
-file_path = "CA-HepTh.txt"
+file_path = "./datasets/CA-HepTh.txt" 
 G = nx.read_edgelist(
     file_path, 
     delimiter='\t', 

@@ -21,6 +21,19 @@ def load_graph(file_path):
     )
     return G
 
+# File path to the data
+file_path = "CA-HepTh.txt"
+
+# Load the graph
+G = load_graph(file_path)
+
+# Compute and print network characteristics
+num_nodes = G.number_of_nodes()
+num_edges = G.number_of_edges()
+
+print(f"Number of nodes: {num_nodes}")
+print(f"Number of edges: {num_edges}")
+
 
 ############## Task 2
 

@@ -22,7 +22,7 @@ def load_graph(file_path):
     return G
 
 # File path to the data
-file_path = "CA-HepTh.txt"
+file_path = "./../datasets/CA-HepTh.txt"
 
 # Load the graph
 G = load_graph(file_path)

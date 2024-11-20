@@ -120,8 +120,20 @@ from sklearn.metrics import accuracy_score
 
 # Task 12
 
-G_train = list(graph_from_networkx(G_train_nx, node_labels_tag=None))
-G_test = list(graph_from_networkx(G_test_nx, node_labels_tag=None))
+# Add placeholder labels if missing
+def add_node_labels(graphs):
+    for G in graphs:
+        for node in G.nodes():
+            if 'label' not in G.nodes[node]:
+                G.nodes[node]['label'] = str(node)  # Add a default label (e.g., the node ID)
+    return graphs
+
+# Apply to both training and test graphs
+G_train_nx = add_node_labels(G_train_nx)
+G_test_nx = add_node_labels(G_test_nx)
+
+G_train = list(graph_from_networkx(G_train_nx, node_labels_tag="label"))
+G_test = list(graph_from_networkx(G_test_nx, node_labels_tag="label"))
 
 # Initialize the Weisfeiler-Lehman subtree kernel
 gk = WeisfeilerLehman(n_iter=3, base_graph_kernel=VertexHistogram)

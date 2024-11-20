@@ -82,18 +82,23 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 # Task 11
-
 def create_graphs_of_words(docs, vocab, window_size):
     graphs = list()
-    for idx,doc in enumerate(docs):
+    for idx, doc in enumerate(docs):
         G = nx.Graph()
-    
-        ##################
-        # your code here #
-        ##################
+        
+        # Add nodes for each word
+        for word in doc:
+            G.add_node(vocab[word])
+        
+        # Add edges based on the window size
+        for i in range(len(doc) - window_size + 1):
+            window = doc[i:i + window_size]
+            for j in range(len(window)):
+                for k in range(j + 1, len(window)):
+                    G.add_edge(vocab[window[j]], vocab[window[k]])
         
         graphs.append(G)
-    
     return graphs
 
 
@@ -115,32 +120,45 @@ from sklearn.metrics import accuracy_score
 
 # Task 12
 
-# Transform networkx graphs to grakel representations
-G_train = # your code here #
-G_test = # your code here #
+# Task 12: Convert graphs to GraKeL format
+G_train = list(graph_from_networkx(G_train_nx, node_labels_tag=None))
+G_test = list(graph_from_networkx(G_test_nx, node_labels_tag=None))
 
-# Initialize a Weisfeiler-Lehman subtree kernel
-gk = # your code here #
+# Initialize the Weisfeiler-Lehman subtree kernel
+gk = WeisfeilerLehman(n_iter=3, base_kernel=VertexHistogram())
 
 # Construct kernel matrices
-K_train = # your code here #
-K_test = # your code here #
+K_train = gk.fit_transform(G_train)
+K_test = gk.transform(G_test)
+
 
 #Task 13
 
 # Train an SVM classifier and make predictions
+clf = SVC(kernel="precomputed")
+clf.fit(K_train, y_train)
+y_pred = clf.predict(K_test)
 
-##################
-# your code here #
-##################
+# Evaluate predictions
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy using WL subtree kernel: {accuracy:.4f}")
 
-# Evaluate the predictions
-print("Accuracy:", accuracy_score(y_pred, y_test))
 
 
 #Task 14
 
 
-##################
-# your code here #
-##################
+from grakel.kernels import VertexHistogram
+
+# Initialize and compute the Vertex Histogram kernel
+gk_vh = VertexHistogram()
+K_train_vh = gk_vh.fit_transform(G_train)
+K_test_vh = gk_vh.transform(G_test)
+
+# Train and evaluate with Vertex Histogram kernel
+clf_vh = SVC(kernel="precomputed")
+clf_vh.fit(K_train_vh, y_train)
+y_pred_vh = clf_vh.predict(K_test_vh)
+
+accuracy_vh = accuracy_score(y_test, y_pred_vh)
+print(f"Accuracy using Vertex Histogram kernel: {accuracy_vh:.4f}")

@@ -58,7 +58,7 @@ def spectral_clustering(G, k):
 
 ##################
 # Load the graph (adjust the file path as needed)
-file_path = "CA-HepTh.txt"  # Replace with the actual file path
+file_path = "./../datasets/CA-HepTh.txt"  # Replace with the actual file path
 G = nx.read_edgelist(
     file_path, 
     delimiter='\t', 

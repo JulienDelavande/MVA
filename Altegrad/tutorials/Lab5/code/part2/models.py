@@ -21,7 +21,18 @@ class GNN(nn.Module):
         ############## Tasks 10 and 13
         
         ##################
-        # your code here #
+        x = torch.mm(adj, x_in)
+        x = self.fc1(x)
+        x = self.relu(x)
+        x = self.dropout(x)
+
+        x = torch.mm(adj, x)
+        x = self.fc2(x)
+        x = self.relu(x)
+        x = self.dropout(x)
+
+        x = self.fc3(x)
+        #x = torch.mm(adj, x)
         ##################
 
 

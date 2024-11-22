@@ -11,14 +11,17 @@ def normalize_adjacency(A):
     ############## Task 9
 
     ##################
-    # your code here #
+    A_tilde = A + sp.identity(A.shape[0])  # A_tilde = A + I
+    degrees = np.array(A_tilde.sum(axis=1)).flatten()  # D_tilde_ii = sum(A_tilde_ij)
+    D_tilde_inv_sqrt = sp.diags(1.0 / np.sqrt(degrees))  # D_tilde^(-1/2)
+    A_normalized = D_tilde_inv_sqrt @ A_tilde @ D_tilde_inv_sqrt  # A_hat
     ##################
-    
-	return A_normalized
+
+    return A_normalized
 
 
 def load_cora():
-    idx_features_labels = np.genfromtxt("../data/cora.content", dtype=np.dtype(str))
+    idx_features_labels = np.genfromtxt("./data/cora.content", dtype=np.dtype(str))
     features = sp.csr_matrix(idx_features_labels[:, 1:-1], dtype=np.float32)
     features = features.todense()
     features /= features.sum(1).reshape(-1, 1)

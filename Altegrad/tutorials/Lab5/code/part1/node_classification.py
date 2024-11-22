@@ -22,7 +22,7 @@ print("Number of edges:", G.number_of_edges())
 n = G.number_of_nodes()
 
 # Loads the class labels
-class_labels = np.loadtxt('../data/karate_labels.txt', delimiter=',', dtype=np.int32)
+class_labels = np.loadtxt('./data/karate_labels.txt', delimiter=',', dtype=np.int32)
 idx_to_class_label = dict()
 for i in range(class_labels.shape[0]):
     idx_to_class_label[class_labels[i,0]] = class_labels[i,1]

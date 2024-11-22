@@ -41,7 +41,7 @@ def generate_walks(G, num_walks, walk_length):
     np.random.shuffle(walks)
     ##################
 
-    return walks.tolist()
+    return walks
 
 
 # Simulates walks and uses the Skipgram model to learn node representations

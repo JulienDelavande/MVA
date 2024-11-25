@@ -136,4 +136,5 @@ for i in range(unique_labels.size):
 ax.legend(scatterpoints=1)
 fig.suptitle('T-SNE Visualization of the nodes of the test set',fontsize=12)
 fig.set_size_inches(15,9)
+plt.savefig('embeddings_cora.pdf')
 plt.show()

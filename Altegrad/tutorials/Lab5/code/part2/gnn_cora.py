@@ -118,7 +118,7 @@ embeddings_test_2d = tsne.fit_transform(embeddings_test_np)
 ##################
 
 
-labels = class_labels[idx_test]
+labels = class_labels[idx_test.cpu().numpy()]
 unique_labels = np.unique(labels)
 
 colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k']

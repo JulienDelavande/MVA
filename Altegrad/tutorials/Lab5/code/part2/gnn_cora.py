@@ -104,14 +104,17 @@ embeddings_test = test()
 # Transforms torch tensor to numpy matrix
 
 ##################
-# your code here #
+# Extract node embeddings for the test set
+embeddings_test_np = embeddings_test.detach().cpu().numpy()
+
 ##################
 
 
 # Projects the emerging representations to two dimensions using t-SNE
 
 ##################
-# your code here #
+tsne = TSNE(n_components=2, random_state=42, perplexity=30, n_iter=1000)
+embeddings_test_2d = tsne.fit_transform(embeddings_test_np)
 ##################
 
 

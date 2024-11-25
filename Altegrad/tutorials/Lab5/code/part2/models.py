@@ -20,7 +20,7 @@ class GNN(nn.Module):
     def forward(self, x_in, adj):
         ############## Tasks 10 and 13
         
-        ##################
+        ################## task 10
         x = torch.mm(adj, x_in)
         x = self.fc1(x)
         x = self.relu(x)
@@ -29,11 +29,14 @@ class GNN(nn.Module):
         x = torch.mm(adj, x)
         x = self.fc2(x)
         x = self.relu(x)
-        x = self.dropout(x)
+        x_hidden = self.dropout(x)
 
-        x = self.fc3(x)
-        #x = torch.mm(adj, x)
+        x = self.fc3(x_hidden)
+        #return F.log_softmax(x, dim=1)
         ##################
 
 
-        return F.log_softmax(x, dim=1)
+        
+        ################## task 13
+        return F.log_softmax(x, dim=1), x_hidden
+        ##################

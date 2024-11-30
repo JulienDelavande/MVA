@@ -34,9 +34,12 @@ class GATLayer(nn.Module):
         adj_att = torch.sparse.FloatTensor(indices, alpha, torch.Size([x.size(0), x.size(0)])).to(x.device)
         
         ##################
+        
         adj_att = torch.sparse.FloatTensor(
             indices, alpha, torch.Size([x.size(0), x.size(0)])
         ).to(x.device)
+        print(f"adj_att shape: {adj_att.shape}")
+        print(f"h shape: {h.shape}")
         out = torch.sparse.mm(adj_att, h)
         ##################
 

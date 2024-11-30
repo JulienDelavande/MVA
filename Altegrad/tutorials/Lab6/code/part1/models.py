@@ -22,7 +22,7 @@ class GATLayer(nn.Module):
         h = self.fc(x)
         indices = adj.coalesce().indices()
         edge_features = torch.cat([h[indices[0, :]], h[indices[1, :]]], dim=1)
-        h = self.leakyrelu(self.a(edge_features))
+        h = self.leakyrelu(self.a(edge_features).squeeze())
         ##################
 
         h = torch.exp(h.squeeze())
@@ -35,9 +35,7 @@ class GATLayer(nn.Module):
         
         ##################
         
-        adj_att = torch.sparse.FloatTensor(
-            indices, alpha, torch.Size([x.size(0), x.size(0)])
-        ).to(x.device)
+        adj_att = torch.sparse_coo_tensor(indices, alpha, (x.size(0), x.size(0))).to(x.device)
         if h.dim() == 1:
             h = h.unsqueeze(-1)
         print(f"adj_att shape: {adj_att.shape}")

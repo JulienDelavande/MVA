@@ -119,4 +119,5 @@ plt.figure(1,figsize=(12,12))
 pos = nx.spring_layout(G_directed)
 arc_rad = 0.25
 nx.draw(G_directed, width=weights, connectionstyle=f'arc3, rad = {arc_rad}')
+plt.savefig('karate_attention_weights.png')
 plt.show()

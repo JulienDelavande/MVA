@@ -22,24 +22,17 @@ class GATLayer(nn.Module):
         h = self.fc(x)
         indices = adj.coalesce().indices()
         edge_features = torch.cat([h[indices[0, :]], h[indices[1, :]]], dim=1)
-        h = self.leakyrelu(self.a(edge_features).squeeze())
+        e = self.leakyrelu(self.a(edge_features).squeeze())
         ##################
 
-        h = torch.exp(h.squeeze())
-        unique = torch.unique(indices[0,:])
-        t = torch.zeros(unique.size(0), device=x.device)
-        h_sum = t.scatter_add(0, indices[0,:], h)
-        h_norm = torch.gather(h_sum, 0, indices[0,:])
-        alpha = torch.div(h, h_norm)
-        adj_att = torch.sparse.FloatTensor(indices, alpha, torch.Size([x.size(0), x.size(0)])).to(x.device)
+        attention = torch.exp(e)
+        row_sum = torch.zeros(x.size(0)).to(x.device)
+        row_sum.scatter_add_(0, indices[0, :], attention)
+        alpha = attention / row_sum[indices[0, :]]  # alpha: [num_edges]
+        #adj_att = torch.sparse.FloatTensor(indices, alpha, torch.Size([x.size(0), x.size(0)])).to(x.device)
+        adj_att = torch.sparse_coo_tensor(indices, alpha, (x.size(0), x.size(0))).to(x.device)
         
         ##################
-        
-        adj_att = torch.sparse_coo_tensor(indices, alpha, (x.size(0), x.size(0))).to(x.device)
-        if h.dim() == 1:
-            h = h.unsqueeze(-1)
-        print(f"adj_att shape: {adj_att.shape}")
-        print(f"h shape: {h.shape}")
         out = torch.sparse.mm(adj_att, h)
         ##################
 

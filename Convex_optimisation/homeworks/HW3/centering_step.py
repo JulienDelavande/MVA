@@ -34,6 +34,7 @@ def centering_step(Q, p, A, b, t, v0, eps):
     beta = 0.5
 
     # Precompute A v and b - A v
+    
     def compute_phi_and_derivatives(v):
         # Compute barrier function value
         residual = b - A @ v

@@ -71,7 +71,7 @@ for epoch in range(epochs):
     t = time.time()
     model.train()
     optimizer.zero_grad()
-    output = model(features, adj)
+    output, alpha = model(features, adj)
     loss_train = F.nll_loss(output[idx_train], y[idx_train])
     acc_train = accuracy_score(torch.argmax(output[idx_train], dim=1).detach().cpu().numpy(), y[idx_train].cpu().numpy())
     loss_train.backward()

@@ -20,7 +20,7 @@ class GNN(nn.Module):
         ############## Task 6
     
         ##################
-        A_tilde = adj + torch.eye(adj.size(0)).to(self.device)
+        A_tilde = torch.eye(adj.size(0)).to(self.device) + adj
         Z1 = self.relu(torch.mm(A_tilde, torch.mm(x_in, self.fc1.weight.T)))
         Z2 = torch.mm(A_tilde, torch.mm(Z1, self.fc2.weight.T))
         ##################

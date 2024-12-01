@@ -14,10 +14,26 @@ def create_dataset():
     ############## Task 5
     
     ##################
-    # your code here #
+    num_graphs_per_class = 50
+    
+    # Classe 0
+    for _ in range(num_graphs_per_class):
+        n = randint(10, 20)
+        G = nx.fast_gnp_random_graph(n, 0.2)
+        Gs.append(G)
+        y.append(0)
+
+    # Classe 1
+    for _ in range(num_graphs_per_class):
+        n = randint(10, 20)
+        G = nx.fast_gnp_random_graph(n, 0.4)
+        Gs.append(G)
+        y.append(1)
     ##################
 
     return Gs, y
+
+
 
 
 def sparse_mx_to_torch_sparse_tensor(sparse_mx):

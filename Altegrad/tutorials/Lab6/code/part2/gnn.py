@@ -56,7 +56,18 @@ for epoch in range(epochs):
         ############## Task 7
         
         ##################
-        # your code here #
+        G_batch = G_train[i: i + batch_size]
+        y_batch = torch.LongTensor(y_train[i: i + batch_size]).to(device)
+        adj_list = [nx.adjacency_matrix(G) for G in G_batch]
+        adj_block = sp.block_diag(adj_list)
+        features_list = [np.ones((G.number_of_nodes(), 1)) for G in G_batch]
+        features_batch = np.vstack(features_list)
+        idx_batch = []
+        for graph_idx, G in enumerate(G_batch):
+            idx_batch.extend([graph_idx] * G.number_of_nodes())
+        idx_batch = torch.LongTensor(idx_batch).to(device)
+        adj_batch = sparse_mx_to_torch_sparse_tensor(adj_block).to(device)
+        features_batch = torch.FloatTensor(features_batch).to(device)
         ##################
         
         optimizer.zero_grad()
@@ -90,7 +101,18 @@ for i in range(0, N_test, batch_size):
     ############## Task 7
     
     ##################
-    # your code here #
+    G_batch = G_test[i: i + batch_size]
+    y_batch = torch.LongTensor(y_test[i: i + batch_size]).to(device)
+    adj_list = [nx.adjacency_matrix(G) for G in G_batch]
+    adj_block = sp.block_diag(adj_list)
+    features_list = [np.ones((G.number_of_nodes(), 1)) for G in G_batch]
+    features_batch = np.vstack(features_list)
+    idx_batch = []
+    for graph_idx, G in enumerate(G_batch):
+        idx_batch.extend([graph_idx] * G.number_of_nodes())
+    idx_batch = torch.LongTensor(idx_batch).to(device)
+    adj_batch = sparse_mx_to_torch_sparse_tensor(adj_block).to(device)
+    features_batch = torch.FloatTensor(features_batch).to(device)
     ##################
 
     output = model(features_batch, adj_batch, idx_batch)

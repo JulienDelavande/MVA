@@ -17,19 +17,21 @@ class GNN(nn.Module):
         self.relu = nn.ReLU()
 
     def forward(self, x_in, adj, idx):
-        
         ############## Task 6
     
         ##################
-        # your code here #
-        ##################
-        
-        idx = idx.unsqueeze(1).repeat(1, x.size(1))
-        out = torch.zeros(torch.max(idx)+1, x.size(1)).to(self.device)
-        out = out.scatter_add_(0, idx, x) 
-        
-        ##################
-        # your code here #
+        A_tilde = adj + torch.eye(adj.size(0)).to(self.device)
+        Z1 = self.relu(torch.mm(A_tilde, torch.mm(x_in, self.fc1.weight.T)))
+        Z2 = torch.mm(A_tilde, torch.mm(Z1, self.fc2.weight.T))
         ##################
 
-        return F.log_softmax(out, dim=1)
+        idx = idx.unsqueeze(1).repeat(1, Z2.size(1))
+        graph_representation = torch.zeros(torch.max(idx) + 1, Z2.size(1)).to(self.device)
+        graph_representation = graph_representation.scatter_add_(0, idx, Z2)
+
+        ##################
+        graph_representation = self.relu(self.fc3(graph_representation))
+        output = self.fc4(graph_representation)
+        ##################
+        
+        return F.log_softmax(output, dim=1)

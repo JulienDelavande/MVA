@@ -18,7 +18,12 @@ class DeepSets(nn.Module):
         ############## Task 3
     
         ##################
-        # your code here #
+        x = self.embedding(x)    # Shape: (batch_size, set_cardinality, embedding_dim)
+        x = self.fc1(x)          # Shape: (batch_size, set_cardinality, hidden_dim)
+        x = self.tanh(x)         # Shape: (batch_size, set_cardinality, hidden_dim)
+        x = torch.sum(x, dim=1)  # Shape: (batch_size, hidden_dim)
+        x = self.fc2(x)          # Shape: (batch_size, 1)
+        return x.squeeze()       # Shape: (batch_size)
         ##################
         
         return x.squeeze()
@@ -37,7 +42,9 @@ class LSTM(nn.Module):
         ############## Task 4
     
         ##################
-        # your code here #
+        x = self.embedding(x)       # Shape: (batch_size, set_cardinality, embedding_dim)
+        _, (h_n, _) = self.lstm(x)  # h_n: Shape (1, batch_size, hidden_dim)
+        x = self.fc(h_n.squeeze(0)) # Shape: (batch_size, 1)
         ##################
         
         return x.squeeze()

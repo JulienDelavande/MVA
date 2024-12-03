@@ -20,7 +20,7 @@ hidden_dim = 64
 
 # Generates test data
 X_test, y_test = create_test_dataset()
-print(X_test.shape)
+#print(X_test.shape)
 print(X_test[0].shape)
 cards = [X_test[i].shape[1] for i in range(len(X_test))]
 n_samples_per_card = X_test[0].shape[0]

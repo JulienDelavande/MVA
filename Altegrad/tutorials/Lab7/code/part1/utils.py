@@ -24,21 +24,16 @@ def create_train_dataset():
 def create_test_dataset():
     
     ############## Task 2
-    n_samples_per_card = 10000
-    cardinalities = np.arange(5, 101, 5)
-    max_test_card = 100
-    n_test = n_samples_per_card * len(cardinalities)
+    X_test = []
+    y_test = []
 
-    X_test = np.zeros((n_test, max_test_card), dtype=int)
-    y_test = np.zeros(n_test, dtype=int)
-
-    idx = 0
-    for c in cardinalities:
-        digits = np.random.randint(1, 11, size=(n_samples_per_card, c))
-        sums = digits.sum(axis=1)
-        X_test[idx:idx + n_samples_per_card, -c:] = digits
-        y_test[idx:idx + n_samples_per_card] = sums
-        idx += n_samples_per_card
+    for card in range(5, 101, 5):
+        n_samples = 10000
+        samples = np.random.randint(1, 11, size=(n_samples, card))
+        targets = np.sum(samples, axis=1)
+        
+        X_test.append(samples)
+        y_test.append(targets)
     ##############
 
     return X_test, y_test

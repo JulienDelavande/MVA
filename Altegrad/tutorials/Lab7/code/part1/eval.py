@@ -1,7 +1,3 @@
-"""
-Learning on Sets and Graph Generative Models - ALTEGRAD - Nov 2024
-"""
-
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score, mean_absolute_error
@@ -52,28 +48,23 @@ for i in range(len(cards)):
     
         ##################
         x_batch = X_test[i][j:j + batch_size]
-        y_batch = y_test[i][j:j + batch_size]
         x_batch = torch.tensor(x_batch, dtype=torch.long).to(device)
-        y_batch = torch.tensor(y_batch, dtype=torch.float32).to(device)
         with torch.no_grad():
-            output_deepsets = deepsets(x_batch)
+            output_deepsets = deepsets(x_batch).squeeze()
         y_pred_deepsets.append(output_deepsets)
         with torch.no_grad():
-            output_lstm = lstm(x_batch)
+            output_lstm = lstm(x_batch).squeeze()
         y_pred_lstm.append(output_lstm)
         ##################
         
-    y_pred_deepsets = torch.cat(y_pred_deepsets).detach().cpu().numpy()
-    y_pred_lstm = torch.cat(y_pred_lstm).detach().cpu().numpy()
-    y_true = y_test[i]
+    y_pred_deepsets = torch.cat(y_pred_deepsets).detach().cpu().numpy().flatten()
+    y_pred_lstm = torch.cat(y_pred_lstm).detach().cpu().numpy().flatten()
+    y_true = y_test[i].flatten()
     
     acc_deepsets = accuracy_score(y_true, np.round(y_pred_deepsets))
     mae_deepsets = mean_absolute_error(y_true, y_pred_deepsets)
     results['deepsets']['acc'].append(acc_deepsets)
     results['deepsets']['mae'].append(mae_deepsets)
-    
-    y_pred_lstm = torch.cat(y_pred_lstm)
-    y_pred_lstm = y_pred_lstm.detach().cpu().numpy()
     
     acc_lstm = accuracy_score(y_true, np.round(y_pred_lstm))
     mae_lstm = mean_absolute_error(y_true, y_pred_lstm)

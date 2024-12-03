@@ -65,7 +65,7 @@ for i in range(len(cards)):
         
     y_pred_deepsets = torch.cat(y_pred_deepsets).detach().cpu().numpy()
     y_pred_lstm = torch.cat(y_pred_lstm).detach().cpu().numpy()
-    y_true = y_test[i].numpy()
+    y_true = y_test[i]
     
     acc_deepsets = accuracy_score(y_true, np.round(y_pred_deepsets))
     mae_deepsets = mean_absolute_error(y_true, y_pred_deepsets)

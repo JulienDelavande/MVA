@@ -74,7 +74,7 @@ class Encoder(nn.Module):
         ############## Task 8
     
         ##################
-        A_tilde = adj + torch.eye(adj.size(0)).to(adj.device)
+        A_tilde = torch.eye(adj.size(0)).to(adj.device) + adj
         D_tilde = torch.sum(A_tilde, dim=1)
         D_tilde_inv = 1.0 / D_tilde
         A_bar = D_tilde_inv.view(-1, 1) * A_tilde

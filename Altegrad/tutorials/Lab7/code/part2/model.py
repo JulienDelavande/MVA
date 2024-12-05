@@ -37,7 +37,12 @@ class Decoder(nn.Module):
         ############## Task 10
     
         ##################
-        # your code here #
+        for fc_layer in self.fc:
+            x = fc_layer(x)
+
+        T2 = self.fc_proj(x)  # Shape: (batch_size, n_nodes * n_nodes)
+        T2 = T2.view(-1, self.n_nodes, self.n_nodes)
+        adj = (T2 + T2.transpose(1, 2)) / 2.0
         ##################
         
         return adj
@@ -69,7 +74,14 @@ class Encoder(nn.Module):
         ############## Task 8
     
         ##################
-        # your code here #
+        A_tilde = adj + torch.eye(adj.size(0)).to(adj.device)
+        D_tilde = torch.sum(A_tilde, dim=1)
+        D_tilde_inv = 1.0 / D_tilde
+        A_bar = D_tilde_inv.view(-1, 1) * A_tilde
+
+        for layer in range(len(self.mlps)):
+            x = torch.mm(A_bar, x)
+            x = self.mlps[layer](x)
         ##################
 
         # Readout
@@ -110,9 +122,11 @@ class VariationalAutoEncoder(nn.Module):
         x_g  = self.encoder(adj, x, idx)
         
         ############## Task 9
-    
-        mu = # your code here
-        logvar = # your code here
+        
+        ############## 
+        mu = self.fc_mu(x_g)
+        logvar = self.fc_logvar(x_g)
+        ##############
         
         x_g = self.reparameterize(mu, logvar)
         adj = self.decoder(x_g)

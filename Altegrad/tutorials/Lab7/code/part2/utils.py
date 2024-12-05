@@ -41,9 +41,11 @@ def find_communities_and_plot(G):
     # Plot adjacency matrix
     plt.imshow(reordered_matrix, cmap='gray')
     plt.title("Reordered Adjacency Matrix")
+    plt.savefig("reordered_adjacency_matrix.png")
     plt.show()
 
     # Draw the graph
     plt.title('Generated graph')
     nx.draw(G)
+    plt.savefig("generated_graph.png")
     plt.show()

@@ -32,7 +32,7 @@ max_nodes = 40
 input_feats = 2
 
 # Load dataset
-adj_dict = loadmat("../data/sbm.mat")
+adj_dict = loadmat("./data/sbm.mat")
 adj = [adj_dict['G'+str(i)] for i in range(1000)]
 n_graphs = len(adj)
 
@@ -141,8 +141,8 @@ autoencoder.eval()
 
 
 ############## Task 11
-z = # your code here #
-adj = # your code here #
+z = torch.randn(5, latent_dim).to(device)
+adj = autoencoder.decode(z)
 
 
 # Create and visualize graphs

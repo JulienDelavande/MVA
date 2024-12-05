@@ -23,7 +23,6 @@ class DeepSets(nn.Module):
         x = self.tanh(x)         # Shape: (batch_size, set_cardinality, hidden_dim)
         x = torch.sum(x, dim=1)  # Shape: (batch_size, hidden_dim)
         x = self.fc2(x)          # Shape: (batch_size, 1)
-        return x.squeeze()       # Shape: (batch_size)
         ##################
         
         return x.squeeze()

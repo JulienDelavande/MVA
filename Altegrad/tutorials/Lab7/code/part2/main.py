@@ -156,4 +156,4 @@ for i in range(adj.size(0)):
         if G.degree(node) == 0:
             to_remove.append(node)
     G.remove_nodes_from(to_remove)
-    find_communities_and_plot(G)
+    find_communities_and_plot(G, i)

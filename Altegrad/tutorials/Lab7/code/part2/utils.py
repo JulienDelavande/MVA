@@ -26,7 +26,7 @@ def sparse_mx_to_torch_sparse(M):
     shape = torch.Size(M.shape)
     return torch.sparse.FloatTensor(indices, values, shape)
 
-def find_communities_and_plot(G):
+def find_communities_and_plot(G, no=0):
     # Compute the best partition using Louvain algorithm
     partition = nx.community.louvain_communities(G)
     
@@ -40,12 +40,12 @@ def find_communities_and_plot(G):
     
     # Plot adjacency matrix
     plt.imshow(reordered_matrix, cmap='gray')
-    plt.title("Reordered Adjacency Matrix")
-    plt.savefig("reordered_adjacency_matrix.png")
+    plt.title(f"Reordered Adjacency Matrix - Graph {no}")
+    plt.savefig(f"reordered_adjacency_matrix_{no}.png")
     plt.show()
 
     # Draw the graph
-    plt.title('Generated graph')
+    plt.title(f'Generated graph {no}')
     nx.draw(G)
-    plt.savefig("generated_graph.png")
+    plt.savefig(f"generated_graph_{no}.png")
     plt.show()

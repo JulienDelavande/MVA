@@ -21,26 +21,34 @@ class Generator(nn.Module):
         self.pyzx_mlp = MLP(fc_layers, activation='linear')
 
         # p(x|z)
-        self.decoder_input_shape = [(4, 4, n_channel), (7, 7, n_channel), (14, 14, n_channel), input_shape]
+        self.decoder_input_shape = [
+            (n_channel, 4, 4),
+            (n_channel, 7, 7),
+            (n_channel, 14, 14),
+            input_shape  # (1,28,28)
+        ]
+
         fc_layers = [dimZ, dimH, int(torch.prod(torch.tensor(self.decoder_input_shape[0])))]
         self.mlp = MLP(fc_layers, activation='relu')
 
         self.conv_layers = nn.ModuleList()
         for i in range(len(self.decoder_input_shape) - 1):
-            output_shape = self.decoder_input_shape[i + 1]
-            input_shape = self.decoder_input_shape[i]
+            output_shape = self.decoder_input_shape[i + 1]  # (C,H,W)
+            input_shape = self.decoder_input_shape[i]        # (C,H,W)
             strides = (
-                int(output_shape[0] / input_shape[0]),
-                int(output_shape[1] / input_shape[1])
+                output_shape[1] // input_shape[1],  # stride en hauteur
+                output_shape[2] // input_shape[2]   # stride en largeur
             )
             activation = 'relu' if i < len(self.decoder_input_shape) - 2 else last_activation
 
             if activation in ['logistic_cdf', 'gaussian'] and i == len(self.decoder_input_shape) - 2:
                 activation = 'split'
-                output_shape = (output_shape[0], output_shape[1], output_shape[2] * 2)
+                # doublez le nombre de canaux de sortie
+                output_shape = (output_shape[0]*2, output_shape[1], output_shape[2])
 
-            filter_shape = (filter_width, filter_width, input_shape[-1], output_shape[-1])
+            filter_shape = (filter_width, filter_width, input_shape[0], output_shape[0])
             self.conv_layers.append(DeconvLayer(output_shape, filter_shape, activation, strides, name))
+
 
     def pyzx_params(self, z, x):
         fea = self.gen_conv(x)

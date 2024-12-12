@@ -6,7 +6,7 @@ import torch.optim as optim
 import sys
 from torchvision import datasets, transforms
 
-# Import models GFZ and DBZ
+# Import des modèles
 from models.mnistGFZ import Generator as GFZ
 from models.mnistDFZ import Generator as DFZ
 
@@ -16,7 +16,6 @@ n_iter = 100
 batch_size = 50
 lr = 1e-4
 
-# Define the training loop
 def train(generator, data_loader, optimizer, loss_fn, device):
     generator.train()
     for epoch in range(n_iter):
@@ -35,20 +34,19 @@ def train(generator, data_loader, optimizer, loss_fn, device):
             loss = loss_fn(x_reconstructed, data)
             total_loss += loss.item()
             
-            # Backward pass and optimization
+            # Backward and optimization
             loss.backward()
             optimizer.step()
 
         print(f"Epoch {epoch+1}/{n_iter}, Loss: {total_loss / len(data_loader)}")
 
-# Main function
 def main(generator_type):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     input_shape = (1, 28, 28)
     dimY = 10
     n_channel = 64
 
-    # Choose the generator
+    # Choix du générateur
     if generator_type == "GFZ":
         generator = GFZ(input_shape, dimH, dimZ, dimY, n_channel, 'sigmoid', 'GFZ').to(device)
     elif generator_type == "DFZ":
@@ -56,11 +54,11 @@ def main(generator_type):
     else:
         raise ValueError("Invalid generator type. Choose 'GFZ' or 'DFZ'.")
 
-    # Define optimizer and loss function
+    # Optimisateur et fonction de perte
     optimizer = optim.Adam(generator.parameters(), lr=lr)
     loss_fn = nn.MSELoss()
 
-    # Load MNIST dataset
+    # Chargement des données MNIST
     transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.5,), (0.5,))
@@ -68,13 +66,15 @@ def main(generator_type):
     train_dataset = datasets.MNIST(root='./data', train=True, transform=transform, download=True)
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
-    # Train the model
+    # Entraînement
     train(generator, train_loader, optimizer, loss_fn, device)
     
-    # Save the trained model
+    # Sauvegarde du modèle
     torch.save(generator.state_dict(), f"{generator_type}.pth")
-    
 
 if __name__ == "__main__":
-    generator_type = sys.argv[1]  # Pass 'GFZ' or 'DBZ' as a command-line argument
+    # Pass 'GFZ' or 'DFZ' as a command-line argument, e.g.:
+    # python train.py GFZ
+    # python train.py DFZ
+    generator_type = sys.argv[1]  
     main(generator_type)

@@ -90,21 +90,21 @@ class Generator(nn.Module):
         self.pyzx_mlp = MLP(fc_layers, activation='linear')
 
         # p(x|z)
-        decoder_input_shape = [(4, 4, n_channel), (7, 7, n_channel), (14, 14, n_channel), input_shape]
-        fc_layers = [dimZ, dimH, int(torch.prod(torch.tensor(decoder_input_shape[0])))]
+        self.decoder_input_shape = [(4, 4, n_channel), (7, 7, n_channel), (14, 14, n_channel), input_shape]
+        fc_layers = [dimZ, dimH, int(torch.prod(torch.tensor(self.decoder_input_shape[0])))]
         self.mlp = MLP(fc_layers, activation='relu')
 
         self.conv_layers = nn.ModuleList()
-        for i in range(len(decoder_input_shape) - 1):
-            output_shape = decoder_input_shape[i + 1]
-            input_shape = decoder_input_shape[i]
+        for i in range(len(self.decoder_input_shape) - 1):
+            output_shape = self.decoder_input_shape[i + 1]
+            input_shape = self.decoder_input_shape[i]
             strides = (
                 int(output_shape[0] / input_shape[0]),
                 int(output_shape[1] / input_shape[1])
             )
-            activation = 'relu' if i < len(decoder_input_shape) - 2 else last_activation
+            activation = 'relu' if i < len(self.decoder_input_shape) - 2 else last_activation
 
-            if activation in ['logistic_cdf', 'gaussian'] and i == len(decoder_input_shape) - 2:
+            if activation in ['logistic_cdf', 'gaussian'] and i == len(self.decoder_input_shape) - 2:
                 activation = 'split'
                 output_shape = (output_shape[0], output_shape[1], output_shape[2] * 2)
 

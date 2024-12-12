@@ -51,7 +51,7 @@ def main(generator_type):
     # Choose the generator
     if generator_type == "GFZ":
         generator = GFZ(input_shape, dimH, dimZ, dimY, n_channel, 'sigmoid', 'GFZ').to(device)
-    elif generator_type == "DBZ":
+    elif generator_type == "DFZ":
         generator = DFZ(input_shape, dimH, dimZ, dimY, n_channel, 'sigmoid', 'DFZ').to(device)
     else:
         raise ValueError("Invalid generator type. Choose 'GFZ' or 'DFZ'.")

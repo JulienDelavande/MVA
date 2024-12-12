@@ -9,3 +9,6 @@
 [submodule "TimeSeries"]
 	path = Time_series/tutorials-mva-2024-2025
 	url = https://github.com/deepcharles/tutorials-mva-2024-2025.git
+[submodule "PGM/project/DeepBayes"]
+	path = PGM/project/DeepBayes
+	url = git@github.com:SoelMgd/DeepBayes.git

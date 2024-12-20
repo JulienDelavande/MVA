@@ -1,8 +1,0 @@
-tensorflow==1.10.1
-keras==2.2.2
-numpy
-h5py
-matplotlib
-scipy
-pillow
-# Ajouter les dépendances spécifiques comme cleverhans si nécessaire

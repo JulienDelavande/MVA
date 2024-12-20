@@ -12,3 +12,6 @@
 [submodule "PGM/project/DeepBayes"]
 	path = PGM/project/DeepBayes
 	url = git@github.com:SoelMgd/DeepBayes.git
+[submodule "PGM/DeepBayes"]
+	path = PGM/DeepBayes
+	url = git@github.com:SoelMgd/DeepBayes.git

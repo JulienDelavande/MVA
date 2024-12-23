@@ -15,3 +15,6 @@
 [submodule "PGM/DeepBayes"]
 	path = PGM/DeepBayes
 	url = git@github.com:SoelMgd/DeepBayes.git
+[submodule "Object_recognition/project"]
+	path = Object_recognition/project
+	url = git@github.com:SoelMgd/TokenCompose.git

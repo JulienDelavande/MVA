@@ -21,3 +21,6 @@
 [submodule "Time_series/project"]
 	path = Time_series/project
 	url = git@github.com:JulienDelavande/graph-time-series-forecasting.git
+[submodule "Altegrad/ALTEGRAD_Kaggle"]
+	path = Altegrad/ALTEGRAD_Kaggle
+	url = https://github.com/SoelMgd/ALTEGRAD_Kaggle.git

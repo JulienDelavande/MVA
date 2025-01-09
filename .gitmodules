@@ -24,3 +24,6 @@
 [submodule "Altegrad/ALTEGRAD_Kaggle"]
 	path = Altegrad/ALTEGRAD_Kaggle
 	url = https://github.com/SoelMgd/ALTEGRAD_Kaggle.git
+[submodule "Reinforcement_learning/mva-rl-assignment-JulienDelavande"]
+	path = Reinforcement_learning/mva-rl-assignment-JulienDelavande
+	url = git@github.com:RL-MVA-2024-25/mva-rl-assignment-JulienDelavande.git

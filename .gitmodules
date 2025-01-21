@@ -12,8 +12,8 @@
 [submodule "PGM/project/DeepBayes"]
 	path = PGM/project/DeepBayes
 	url = git@github.com:SoelMgd/DeepBayes.git
-[submodule "PGM/DeepBayes"]
-	path = PGM/DeepBayes
+[submodule "PGM/project/DeepBayes"]
+	path = PGM/project/DeepBayes
 	url = git@github.com:SoelMgd/DeepBayes.git
 [submodule "Object_recognition/project"]
 	path = Object_recognition/project

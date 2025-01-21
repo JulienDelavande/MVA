@@ -27,3 +27,6 @@
 [submodule "Reinforcement_learning/mva-rl-assignment-JulienDelavande"]
 	path = Reinforcement_learning/mva-rl-assignment-JulienDelavande
 	url = git@github.com:RL-MVA-2024-25/mva-rl-assignment-JulienDelavande.git
+[submodule "LLM/llm_mva"]
+	path = LLM/llm_mva
+	url = https://github.com/nathanael-fijalkow/llm_mva.git

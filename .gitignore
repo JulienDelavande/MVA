@@ -23,3 +23,5 @@ y_test.npy
 y_train.npy
 
 git rm -r --cached .
+
+Graphs/practicals/02_semi_supervised_learning/DELAVANDE-JULIEN-ssl.zip

@@ -30,6 +30,3 @@
 [submodule "LLM/llm_mva"]
 	path = LLM/llm_mva
 	url = https://github.com/nathanael-fijalkow/llm_mva.git
-[submodule "Bayesian-ML/bml-course"]
-	path = Bayesian-ML/bml-course
-	url = https://github.com/rbardenet/bml-course.git
